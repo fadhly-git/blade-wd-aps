@@ -24,6 +24,16 @@
         </div>
 
         <div>
+            <x-input-label for="id_poli" :value="__('Poli')" />
+            <select class="form-control" name="id_poli" id="id_poli" required>
+                @foreach( $poli as $p)
+                    <option value="{{ $p->id }}" {{ old('id_poli', $user->id_poli) == $p->id ? 'selected' : '' }}>{{ $p->nama_poli }}</option>
+                @endforeach
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('nama')" />
+        </div>
+
+        <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
@@ -56,7 +66,7 @@
                     x-show="show"
                     x-transition
                     x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
+                    class="text-sm text-green-600 font-bold"
                 >{{ __('Saved.') }}</p>
             @endif
         </div>

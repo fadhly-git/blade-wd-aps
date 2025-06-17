@@ -1,23 +1,28 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __('Obat') }}
+            {{ __('Obat yang dihapus') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
-            <div class="p-4 bg-white shadow-sm sm:p-8 sm:rounded-lg" >
+            <div class="p-4 bg-white shadow-sm sm:p-8 sm:rounded-lg" <section>
                 <header class="flex items-center justify-between">
                     <h2 class="text-lg font-medium text-gray-900">
-                        {{ __('Daftar Obat') }}
+                        {{ __('Daftar Obat yang terhapus') }}
                     </h2>
 
                     <div class="flex-col items-center justify-center text-center">
-                        <a href="{{route('dokter.obat.trash')}}" class="btn btn-primary">Trash</a>
-                        <a href="{{route('dokter.obat.create')}}" class="btn btn-success">Tambah Obat</a>
+                        <a href="{{route('dokter.obat.index')}}" class="btn btn-primary">Kembali</a>
 
-                        @if (session('status') === 'obat-created')
+                        @if (session('status') === 'obat-restored')
+                            <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                                class="text-sm text-gray-600">{{ __('Restored.') }}</p>
+                        @elseif (session('status') === 'obat-deleted')
+                            <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                                class="text-sm text-gray-600">{{ __('Deleted.') }}</p>
+                        @elseif (session('status') === 'obat-created')
                             <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
                                 class="text-sm text-gray-600">{{ __('Created.') }}</p>
                         @endif
@@ -44,14 +49,11 @@
                                     {{ 'Rp' . number_format($obat->harga, 0, ',', '.') }}
                                 </td>
                                 <td class="flex items-center gap-3">
-                                    {{-- Button Edit --}}
-                                    <a href="{{route('dokter.obat.edit', $obat->id)}}" class="btn btn-secondary btn-sm">Edit</a>
 
                                     {{-- Button Delete --}}
-                                    <form action="{{ route('dokter.obat.destroy', $obat->id) }}" method="POST">
+                                    <form action="{{ route('dokter.obat.restore', $obat->id) }}" method="POST">
                                         @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        <button type="submit" class="btn btn-success btn-sm">Restore</button>
                                     </form>
                                 </td>
                             </tr>

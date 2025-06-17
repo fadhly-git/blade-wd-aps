@@ -7,15 +7,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
+Route::get('apacoba', [\App\Http\Controllers\Pasien\RiwayatPasien::class, 'show_Json'])->name('apacoba');
+Route::get('tes', function () { return 'tes oke'; });
 
 require __DIR__.'/auth.php';
 require __DIR__.'/pasien.php';

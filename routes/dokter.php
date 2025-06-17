@@ -39,5 +39,9 @@ Route::middleware(['auth', 'role:dokter'])->prefix('dokter')->group(function () 
         Route::get('/{id}/edit', [ObatController::class, 'edit'])->name('dokter.obat.edit');
         Route::patch('/{id}', [ObatController::class, 'update'])->name('dokter.obat.update');
         Route::delete('/{id}', [ObatController::class, 'destroy'])->name('dokter.obat.destroy');
+
+        // trash
+        Route::get('trash', [ObatController::class, 'trash'])->name('dokter.obat.trash');
+        Route::post('/{id}/restore', [ObatController::class,'restore'])->name('dokter.obat.restore');
     });
 });

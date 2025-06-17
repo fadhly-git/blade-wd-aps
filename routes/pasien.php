@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dokter\ProfileController;
 use App\Http\Controllers\Pasien\JanjiPeriksaController;
+use App\Http\Controllers\Pasien\RiwayatPasien;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'role:pasien'])->group(function () {
@@ -22,5 +23,11 @@ Route::middleware(['auth', 'role:pasien'])->group(function () {
             Route::delete('/', [ProfileController::class, 'destroy'])->name('pasien.profile.destroy');
         });
 
+        Route::prefix('riwayat')->group(function () {
+            Route::get('/', [RiwayatPasien::class, 'index'])->name('pasien.riwayat.index');
+            Route::get('/apacoba', [RiwayatPasien::class, 'show_Json'])->name('pasien.riwayat.apacoba');
+            Route::get('/{id}/detail', [RiwayatPasien::class, 'detail'])->name('pasien.riwayat.detail');
+            Route::get('/{id}/show', [RiwayatPasien::class, 'show'])->name('pasien.riwayat.show');
+        });
     });
 });

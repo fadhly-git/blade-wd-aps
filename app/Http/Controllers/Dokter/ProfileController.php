@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dokter;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Poli;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,15 +20,15 @@ class ProfileController extends Controller
     {
         if ($request->user()->role === 'pasien') {
             return view('pasien.profile.edit', [
-            'user' => $request->user(),
-        ]);
-        }
-        else if ($request->user()->role === 'dokter') {
-            return view('dokter.profile.edit', [
                 'user' => $request->user(),
             ]);
-        }
-        else {
+        } else if ($request->user()->role === 'dokter') {
+            $poli = Poli::all();
+            return view('dokter.profile.edit', [
+                'user' => $request->user(),
+                'poli' => $poli
+            ]);
+        } else {
             abort(403, 'Unauthorized action.');
         }
     }
